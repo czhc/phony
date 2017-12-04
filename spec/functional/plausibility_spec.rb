@@ -25,11 +25,11 @@ describe 'plausibility' do
           incorrect = [shortest.sub(/\d\s*\z/, '')] # , longest + '0']
 
           correct.each do |value|
-            Phony.plausible?(value).should be_true,
+            Phony.plausible?(value).should be_truthy,
               "It should validate #{value}, but does not."
           end
           incorrect.each do |value|
-            Phony.plausible?(value).should be_false,
+            Phony.plausible?(value).should be_falsey,
               "It should not validate #{value}, but does."
           end
         end
@@ -38,7 +38,7 @@ describe 'plausibility' do
           invalid = [*sample]
 
           invalid.each do |value|
-            Phony.plausible?(value).should be_false,
+            Phony.plausible?(value).should be_falsey,
               "It should not validate #{value}, but does."
           end
         end
@@ -46,15 +46,54 @@ describe 'plausibility' do
     end
 
     context 'specific countries' do
+      it_is_correct_for 'Austria', :samples => '+43 720 116987' # VoIP
+      it_is_correct_for 'Bosnia and Herzegovina', :samples => ['+387 66 666 666',
+                                                               '+387 37 123 456',
+                                                               '+387 33 222 111']
       it_is_correct_for 'Congo', :samples => '+242 1234 56789'
       it_is_correct_for 'Cook Islands', :samples => '+682  71928'
       it_is_correct_for 'Costa Rica', :samples => '+506 2 234 5678'
+      it 'is correct for Croatia' do
+          Phony.plausible?('+385 21 695 900').should be_truthy  # Landline
+          Phony.plausible?('+385 1 4566 666').should be_truthy  # Landline (Zagreb)
+          Phony.plausible?('+385 99 444 999').should be_truthy  # Mobile
+          Phony.plausible?('+385 91 896 7509').should be_truthy # Mobile
+          Phony.plausible?('+385 800 1234').should be_truthy    # Toll free
+          Phony.plausible?('+385 800 123 456').should be_truthy # Toll free
+          Phony.plausible?('+385 60 12 345').should be_truthy   # Premium rate
+          Phony.plausible?('+385 62 123 456').should be_truthy  # Premium, personal and UAN
+      end
       it_is_correct_for "Côte d'Ivoire", :samples => '+225  9358 8764'
       it_is_correct_for 'Democratic Republic of Timor-Leste', :samples => ['+670 465 7886', '+670 7465 7886']
-      it_is_correct_for 'Democratic Republic of the Congo', :samples => '+243 8 864 9794'
+      it_is_correct_for 'Democratic Republic of the Congo', :samples => '+243 80 864 9794'
       it_is_correct_for 'Diego Garcia', :samples => '+246  123 7686'
       it_is_correct_for 'Djibouti', :samples => '+253  3671 1431'
-      it_is_correct_for 'Ecuador', :samples => '+593 68 467 4579'
+      it 'is correct for Ecuador' do
+        Phony.plausible?('+593 22 000 0000').should be_truthy
+        Phony.plausible?('+593 23 000 0000').should be_truthy
+        Phony.plausible?('+593 26 000 0000').should be_truthy
+        Phony.plausible?('+593 27 000 0000').should be_truthy
+        Phony.plausible?('+593 44 000 0000').should be_truthy
+        Phony.plausible?('+593 45 000 0000').should be_truthy
+        Phony.plausible?('+593 47 000 0000').should be_truthy
+        Phony.plausible?('+593 2 200 0000').should be_truthy
+        Phony.plausible?('+593 2 300 0000').should be_truthy
+        Phony.plausible?('+593 2 400 0000').should be_truthy
+        Phony.plausible?('+593 2 500 0000').should be_truthy
+        Phony.plausible?('+593 2 700 0000').should be_truthy
+        Phony.plausible?('+593 3 000 0000').should be_truthy
+        Phony.plausible?('+593 4 000 0000').should be_truthy
+        Phony.plausible?('+593 4 500 0000').should be_truthy
+        Phony.plausible?('+593 4 600 0000').should be_truthy
+        Phony.plausible?('+593 5 200 0000').should be_truthy
+        Phony.plausible?('+593 5 300 0000').should be_truthy
+        Phony.plausible?('+593 6 200 0000').should be_truthy
+        Phony.plausible?('+593 7 200 0000').should be_truthy
+        Phony.plausible?('+593 7 300 0000').should be_truthy
+        Phony.plausible?('+593 7 400 0000').should be_truthy
+        Phony.plausible?('+593 7 600 0000').should be_truthy
+        Phony.plausible?('+593 9 0000 0000').should be_truthy # mobile
+      end
       it_is_correct_for 'Equatorial Guinea', :samples => ['+240 222 201 123',
                                                           '+240 335 201 123']
       it_is_correct_for 'Eritrea', :samples => '+291 6 334 475'
@@ -63,13 +102,21 @@ describe 'plausibility' do
       it_is_correct_for 'Faroe Islands', :samples => '+298  969 597'
       it_is_correct_for 'Fiji (Republic of)', :samples => '+679  998 2441'
       it 'is correct for Finland' do
-        Phony.plausible?('+358 50 123 45').should be_true
-        Phony.plausible?('+358 50 123 45 6').should be_true
-        Phony.plausible?('+358 50 123 45 67').should be_true
-        Phony.plausible?('+358 9 123 45').should be_true
-        Phony.plausible?('+358 9 123 456').should be_true
-        Phony.plausible?('+358 9 123 4567').should be_true
-        Phony.plausible?('+358 20 1470 740').should be_true
+        Phony.plausible?('+358 50 123 4').should be_truthy
+        Phony.plausible?('+358 50 123 45').should be_truthy
+        Phony.plausible?('+358 50 123 45 6').should be_truthy
+        Phony.plausible?('+358 50 123 45 67').should be_truthy
+        Phony.plausible?('+358 50 123 45 678').should be_truthy
+        Phony.plausible?('+358 49 123 456 789').should be_truthy
+        Phony.plausible?('+358 18 1234').should be_truthy
+        Phony.plausible?('+358 9 1234').should be_truthy
+        Phony.plausible?('+358 9 123 45').should be_truthy
+        Phony.plausible?('+358 9 123 456').should be_truthy
+        Phony.plausible?('+358 9 123 4567').should be_truthy
+        Phony.plausible?('+358 20 1470 740').should be_truthy
+        Phony.plausible?('+358 29 123 4567').should be_truthy
+        Phony.plausible?('+358 75323 1234').should be_truthy
+        Phony.plausible?('+358 50 123 456 789').should be_falsey
       end
       it_is_correct_for 'French Guiana (French Department of)', :samples => '+594 594 123 456'
       it_is_correct_for "French Polynesia (Territoire français d'outre-mer)", :samples => '+689 87 27 84 00'
@@ -93,7 +140,7 @@ describe 'plausibility' do
         '+224 700 00 00 00'
       ]
 
-      it_is_correct_for 'Guinea-Bissau', :samples => '+245  728 6998'
+      it_is_correct_for 'Guinea-Bissau', :samples => '+245 44 728 6998'
       it_is_correct_for 'Guyana', :samples => '+592 263 1234'
       it_is_correct_for 'Honduras (Republic of)', :samples => '+504 12 961 637'
       it_is_correct_for 'Iraq', :samples => ['+964 1 123 4567',
@@ -130,10 +177,13 @@ describe 'plausibility' do
                                                 '+961 81 123 456']
       it_is_correct_for 'Lesotho', :samples => '+266  7612 6866'
       it 'is correct for Liberia' do
-        Phony.plausible?('+231 2 123 4567').should be_true
-        Phony.plausible?('+231 4 123 456').should be_true
-        Phony.plausible?('+231 77 123 4567').should be_true
+        Phony.plausible?('+231 2 123 4567').should be_truthy
+        Phony.plausible?('+231 4 123 456').should be_truthy
+        Phony.plausible?('+231 77 123 4567').should be_truthy
       end
+      it_is_correct_for 'Macao', :samples => ['+853 28 12 3456',
+                                              '+853 8 123 4567',
+                                              '+853 6 123 4567',]
       it_is_correct_for 'Macedonia', :samples => ['+389 2 123 4567',
                                                    '+389 7 124 3456',
                                                    '+389 7 234 5678']
@@ -150,7 +200,7 @@ describe 'plausibility' do
       it_is_correct_for 'Marshall Islands (Republic of the)', :samples => '+692  372 7183'
       it_is_correct_for 'Martinique (French Department of)', :samples => '+596 596 123 456'
       it_is_correct_for 'Mauritania', :samples => '+222  1234 5678'
-      it_is_correct_for 'Mauritius', :samples => '+230  695 2277'
+      it_is_correct_for 'Mauritius', :samples => '+230  5695 2277'
       it_is_correct_for 'Micronesia (Federated States of)', :samples => '+691  766 7914'
       it_is_correct_for 'Moldova', :samples => ['+373 800 123 45',
                                                 '+373 22 123 345',
@@ -168,6 +218,10 @@ describe 'plausibility' do
                                               '+977 10 123 456',
                                               '+977 98 1234 5678']
       it_is_correct_for "New Caledonia (Territoire français d'outre-mer)", :samples => '+687  546 835'
+      it 'is correct for New Zealand' do
+        Phony.plausible?('+64800123123').should be_truthy # Free phone
+        Phony.plausible?('+648001231234').should be_truthy # Free phone
+      end
       it_is_correct_for 'Nicaragua', :samples => '+505 12 345 678'
       it_is_correct_for 'Niger', :samples => '+227  1234 5678'
       it_is_correct_for 'Niue', :samples => '+683  3791'
@@ -213,10 +267,13 @@ describe 'plausibility' do
                                                '+381 60 123 456 7890',
                                                '+381 70 123 456',
                                                '+381 66 12 1234',
+                                               '+381 63 123 456',
                                                ['+381 64 12 34567', '+381 64 12 3456'],
                                                ['+381 62 12 34567', '+381 62 12 3456'],
                                                ['+381 65 12 34567', '+381 65 12 3456']]
       it_is_correct_for 'Sierra Leone', :samples => '+232 42 393 972'
+      it_is_correct_for 'Singapore', :samples => ['+65 6123 1234',
+                                                  '+65 800 852 1234']
       it_is_correct_for 'Solomon Islands', :samples => '+677  97851'
       it_is_correct_for 'Somali Democratic Republic', :samples => ['+252 1034 123 45',
                                                                    '+252 1313 123',
@@ -227,20 +284,17 @@ describe 'plausibility' do
                                                     '+211 973 212 345']
       it_is_correct_for 'Suriname (Republic of)', :samples => ['+597 212 345', '+597 612 3456']
       it_is_correct_for 'Swaziland', :samples => ['+268 2207 1234', '+268 550 1234']
-      it_is_correct_for 'Sweden', :samples => ['+46 522 636 365']
+      it_is_correct_for 'Sweden', :samples => ['+46 42 123 45', ['+46 417 123 45', '+46 522 636 365', '+46 513 12 34 56']]
       it_is_correct_for 'Syrian Arab Republic', :samples => ['+963 11 123 4567',
                                                              '+963 31 123 4567',
                                                              '+963 15 731 234',
                                                              '+963 9 1234 5678']
-      it_is_correct_for 'Taiwan', :samples => ['+886 18 123 456',
-                                               '+886 612 123 4567',
-                                               '+886 2 1234 5678',
+      it_is_correct_for 'Taiwan', :samples => ['+886 6 123 4567',
                                                '+886 3 123 4567',
                                                '+886 33 123 456',
                                                '+886 827 123 45',
-                                               '+886 412 1234',
-                                               ['+886 90 123 456', '+886 90 123 4567'],
-                                               '+886 94 991 345']
+                                               '+886 4 123 1234',
+                                               '+886 9 1234 5678']
       it_is_correct_for 'Tajikistan', :samples => ['+992 3130 123 45',
                                                    '+992 331700 123',
                                                    '+992 372 123 345',
@@ -306,7 +360,9 @@ describe 'plausibility' do
                                                              '+971 50 641 2345',
                                                              '+971 600 641 234',
                                                              '+971 500 641 234',
-                                                             '+971 200 641 234']
+                                                             '+971 200 641 234',
+                                                             '+971 54 999 9999',
+                                                             '+971 58 999 9999']
 
       it_is_correct_for 'United Kingdom', :samples => ['+44 1827 50111'], :invalid_samples => ['+44 0000 123456']
 
@@ -322,14 +378,28 @@ describe 'plausibility' do
                                               '+967 77 123 4567',
                                               '+967 58 1234']
       it 'is correct for Zambia' do
-        Phony.plausible?('+260 955 123456').should be_true # mobile
-        Phony.plausible?('+260 211 123456').should be_true # fixed
+        Phony.plausible?('+260 211 123456').should be_truthy  # Fixed
+        Phony.plausible?('+260 955 123456').should be_truthy  # Mobile
+        Phony.plausible?('+260 967 123456').should be_truthy  # Mobile
+        Phony.plausible?('+260 978 123456').should be_truthy  # Mobile
+        Phony.plausible?('+260 800 123 456').should be_truthy # Toll free
       end
       it_is_correct_for 'Zimbabwe', :samples => [['+263 2582 123 456', '+263 2582 123'],
                                                  ['+263 147 123 456', '+263 147 123'],
                                                  ['+263 270 123 456', '+263 270 123 45'],
                                                  '+263 86 1235 4567']
 
+      it 'is correct for Indonesia' do
+        Phony.plausible?('+62 22 000 0').should be_falsey
+        Phony.plausible?('+62 22 000 00').should be_truthy
+        Phony.plausible?('+62 22 000 0000').should be_truthy
+        Phony.plausible?('+62 22 0000 0000').should be_truthy
+        Phony.plausible?('+62 22 000 000 000').should be_truthy
+      end
+
+      it 'is correct for Russia' do
+        Phony.plausible?('+7 3522 000 000').should be_truthy
+      end
     end
   end
 end

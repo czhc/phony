@@ -1,3 +1,157 @@
+h2. Version 2.16.0
+
+* The Phony class methods normalize/normalize!/split/split!/format/format! all raise variants of ArgumentErrors now (#385)
+
+h2. Version 2.15.49
+
+* Improvements for New Zealand (#391)
+* Improvements for Cambodia (#389)
+
+h2. Version 2.15.48
+
+* Improvements for Singapore (#388)
+
+h2. Version 2.15.47
+
+* Improvements for Somalia (#383)
+
+h2. Version 2.15.46
+
+* Improvements for Slovakia (#381)
+
+h2. Version 2.15.45
+
+* Improvements for Macao (#378)
+* Improvements for Zambia (#375)
+* Improvements for Croatia (#375).
+* Improvements for Cambodia (#370).
+
+h2. Version 2.15.44
+
+* Improvements for Cambodia (#372).
+* Improvements for Somalia (#371).
+
+h2. Version 2.15.43
+
+* Improvements for Somalia (#369).
+* Improvements for Congo (#368).
+* Improvements for Poland (#367)
+
+h2. Version 2.15.42
+
+* Improvements for Saudi Arabia (#366).
+* Improvements for Belgium (#365)
+
+h2. Version 2.15.41
+
+* Improvements for error messages (#362).
+* Improvements for Russia (#363)
+
+h2. Version 2.15.40
+
+* Improvements for Hungary (#359).
+* Improvements for Italy (#360)
+
+h2. Version 2.15.39
+
+* Improvements for Belgium (#353).
+* Improvements for Travis (#355, #356)
+* Improvements for UAE (#357).
+
+h2. Version 2.15.38
+
+* Improvements for Austria (#352).
+
+h2. Version 2.15.37
+
+* Improvements for Austria (#351).
+
+h2. Version 2.15.36
+
+* Improvements for Switzerland (#348).
+
+h2. Version 2.15.35
+
+* Improvements for Russia (#347).
+
+h2. Version 2.15.34
+
+* Improvements for Brazil (#345).
+
+h2. Version 2.15.33
+
+* Improvements for Bosnia and Herzegowina (#343).
+
+h2. Version 2.15.32
+
+* Improvements for Vietnam (#341).
+
+h2. Version 2.15.31
+
+* Improvements for Australia (Discussion in #339).
+
+h2. Version 2.15.30
+
+* Improvements for Equador (#337).
+* Improvements for Indonesia (#338).
+* Improvements for Albania (#340).
+
+h2. Version 2.15.29
+
+* Improvements for Finland (#335).
+
+h2. Version 2.15.28
+
+* Improvements for Sweden (#331).
+* Improvements for UAE (#332).
+
+h2. Version 2.15.27
+
+* Improvements for Brazil (#327).
+* Improvements for Austria (#328).
+
+h2. Version 2.15.26
+
+* Improvements for Austria (#325).
+
+h2. Version 2.15.24/25
+
+* Improvements for Brazil (#323).
+
+h2. Version 2.15.23
+
+* Improvements for Ukraine (#322).
+
+h2. Version 2.15.22
+
+* Improvements for Mauritius, Cameroon, Guinea-Bissau and Dem. Rep. Congo (#321).
+
+h2. Version 2.15.21
+
+* Improvements for Sweden (#318).
+
+h2. Version 2.15.20
+
+* Improvements for Serbia (#317).
+
+h2. Version 2.15.19
+
+* Improvements for Indonesia (#316).
+
+h2. Version 2.15.18
+
+* Improvements for Sweden (#313).
+* Improvements for Austria (#314).
+
+h2. Version 2.15.17
+
+* Improvements for Luxembourg (#311).
+* Improvements for The Netherlands (#312).
+
+h2. Version 2.15.16
+
+* Improvements for Macao (#308).
+
 h2. Version 2.15.15
 
 * Improvements for Belgium (#302).
@@ -306,7 +460,7 @@ h2. Version 2.5.1
 
 h2. Version 2.5.0
 
-* Adds a lot of trunk code prefixes for about 30 countries. This will impact on national formatting and normalizing. Please provide feedback on this change – best with pull requests/issues with spec examples. 
+* Adds a lot of trunk code prefixes for about 30 countries. This will impact on national formatting and normalizing. Please provide feedback on this change – best with pull requests/issues with spec examples.
 
 h2. Version 2.4.3
 

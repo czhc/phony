@@ -21,6 +21,12 @@ describe 'country descriptions' do
       it_splits '93201234567', ['93', '20', '1234567'] # Kabul
     end
 
+    describe 'Albania' do
+      it_splits '355691234567', ['355', '69', '123', '4567'] # Mobile 7 digits
+      it_splits '35569123456', ['355', '69', '123', '456'] # Mobile 6 digits
+      it_splits '35541234567', ['355', '4', '123', '4567'] # Tirana
+    end
+
     describe 'Algeria' do
       it_splits '213211231234', ['213', '21', '123', '1234'] # Algiers
       it_splits '213331231234', ['213', '33', '123', '1234'] # Batna
@@ -40,11 +46,14 @@ describe 'country descriptions' do
       it_splits '43198110',        %w( 43 1 98110 )        # Vienna
       it_splits '4310000000',      %w( 43 1 0000000 )      # Vienna
       it_splits '43800123456789',  %w( 43 800 123456789 )  # Free
+      it_splits '436780000000',    %w( 43 678 0000 000 )   # Mobile
       it_splits '4368100000000',   %w( 43 681 0000 0000 )  # Mobile
       it_splits '436880000000',    %w( 43 688 0000 000 )   # Mobile
       it_splits '4366900000000',   %w( 43 669 0000 0000 )  # Mobile
+      it_splits '4367000000000',   %w( 43 670 0000 0000 )  # Mobile
       it_splits '433161234567891', %w( 43 316 1234567891 ) # Graz
       it_splits '432164123456789', %w( 43 2164 123456789 ) # Rohrau
+      it_splits '43720116987',     %w( 43 720 116987 )     # VoIP
 
       # mobile numbers can have from 7 to 10 digits in the subscriber number
       it_splits '436641234567',    %w( 43 664 1234 567 )
@@ -96,6 +105,9 @@ describe 'country descriptions' do
       it_splits '32475279584', ['32', '475', '27', '95', '84'] # mobile
       it_splits '32468279584', ['32', '468', '27', '95', '84'] # mobile (Telenet)
       it_splits '3270123123', ['32', '70', '123', '123']       # Bus Service?
+      it_splits '3278123123', ['32', '78', '123', '123']       # National rate service
+      it_splits '3290123123', ['32', '901', '23', '123']       # National rate service
+      it_splits '3280080404', ['32', '800', '80', '404']       # Apple support
     end
 
     describe 'Belize' do
@@ -119,6 +131,11 @@ describe 'country descriptions' do
       it_splits '26781234567', %w(267 8 1234 567)
     end
 
+    describe 'Bosnia and Herzegovina' do
+      it_splits '38766666666', %w(387 66 666 666)
+      it_splits '38733123456', %w(387 33 123 456)
+    end
+
     describe 'Brazil' do
       it_splits '551112341234', ['55', '11', '1234', '1234']
       it_splits '5511981231234', ['55', '11', '98123', '1234'] # São Paulo's 9 digits mobile
@@ -128,9 +145,22 @@ describe 'country descriptions' do
       it_splits '5531991311234', ['55', '31', '99131', '1234'] # Belo Horizonte's 9th digit
       it_splits '5571991311234', ['55', '71', '99131', '1234'] # Salvador's 9th digit
       it_splits '5579991311234', ['55', '79', '99131', '1234'] # Sergipe's 9th digit
+      it_splits '5547991311234', ['55', '47', '99131', '1234'] # Santa Catarina's 9th digit
+      it_splits '5541991311234', ['55', '41', '99131', '1234'] # Parana's 9th digit
 
-      context "special states with 9 in mobile" do
-        %w{ 11 12 13 14 15 16 17 18 19 21 22 24 27 28 31 32 33 34 35 37 38 71 73 74 75 77 79 81 82 83 84 85 86 87 88 89 91 92 93 94 95 96 97 98 99}.each do |state_code|
+      context 'mobile numbers' do
+        %w{
+          11 12 13 14 15 16 17 18 19
+          21 22 24 27 28
+          31 32 33 34 35 37 38
+          61 62 63 64 65 66 67 68 69
+          71 73 74 75 77 79
+          81 82 83 84 85 86 87 88 89
+          91 92 93 94 95 96 97 98 99
+          41 42 43 44 45 46
+          47 48 49
+          51 53 54 55
+        }.each do |state_code|
           it_splits "55#{state_code}993051123", ['55', state_code, '99305', '1123']
         end
       end
@@ -139,6 +169,7 @@ describe 'country descriptions' do
         it_splits '5508002221234', ['55', '0800', '222', '1234']
         it_splits '5530032221', ['55', '3003', '2221']
         it_splits '5540209999', ['55', '4020', '9999']
+        it_splits '5540038999', ['55', '4003', '8999']
         it_splits '5540048999', ['55', '4004', '8999']
       end
 
@@ -170,7 +201,12 @@ describe 'country descriptions' do
     describe 'Croatia' do
       it_splits '38521695900',  %w( 385 21 695 900 )  # Landline
       it_splits '38514566666',  %w( 385 1 4566 666 )  # Landline (Zagreb)
+      it_splits '38599444999',  %w( 385 99 444 999 )  # Mobile
       it_splits '385918967509', %w( 385 91 896 7509 ) # Mobile
+      it_splits '3858001234',   %w( 385 800 1234 )    # Toll free
+      it_splits '385800123456', %w( 385 800 123 456 ) # Toll free
+      it_splits '3856012345',   %w( 385 60 12 345 )   # Premium rate
+      it_splits '38562123456',  %w( 385 62 123 456 )  # Premium, personal and UAN
     end
     describe 'Cuba' do
       it_splits '5351231234', ['53', '5123', '1234'] # Mobile
@@ -208,7 +244,7 @@ describe 'country descriptions' do
       it_splits '3589123123', ['358', '9', '123', '123'] # Helsinki
       it_splits '3581912312', ['358', '19', '123', '12'] # Nylandia
       it_splits '3585012312', ['358', '50', '123', '12'] # Mobile
-      it_splits '358600123',  ['358', '600', '123']      # Service
+      it_splits '35860012345',  ['358', '6001', '23', '45']      # Service
     end
     describe 'France' do
       it_splits '33112345678', ['33', '1', '12','34','56','78'] # Paris
@@ -301,6 +337,8 @@ describe 'country descriptions' do
       it_splits '622112345567', %w(62 21 1234 5567)
       it_splits '622212345', %w(62 22 123 45)
       it_splits '62221234567', %w(62 22 123 4567)
+      it_splits '622200000000', %w(62 22 0000 0000)
+      it_splits '6222000000000', %w(62 22 000 000 000)
       it_splits '624311234', %w(62 4 311 234)
       it_splits '62431123456', %w(62 4 3112 3456)
       it_splits '6262212345', %w(62 6 221 2345)
@@ -318,6 +356,7 @@ describe 'country descriptions' do
       it_splits '62877123456', %w(62 877 123 456)
       it_splits '62881123456', %w(62 881 123 456)
       it_splits '6288112345656', %w(62 881 1234 5656)
+      it_splits '6288112345656', %w(62 881 1234 56567)
       it_splits '628990344805', %w(62 899 034 4805)
       it_splits '6291234567', %w(62 9 1234 567)
       it_splits '629123456789', %w(62 9 123 456 789)
@@ -372,8 +411,12 @@ describe 'country descriptions' do
       it_splits '3934869528123',['39', '348', '695', '2812', '3']  # Mobile (8-digit subscriber no - new)
       it_splits '393357210488', ['39', '335', '721', '0488'] # Mobile
       it_splits '393248644272', ['39', '324', '864', '4272'] # Mobile
-      it_splits '390612341234', ['39', '06', '1234', '1234'] # Roma
-      it_splits '390288838883', ['39', '02', '8883', '8883'] # Milano
+      it_splits '3906123412',   ['39', '06', '1234', '12'] # Roma 6 digit
+      it_splits '39061234123',  ['39', '06', '1234', '123'] # Roma 7 digit
+      it_splits '390612341234', ['39', '06', '1234', '1234'] # Roma 8 digit
+      it_splits '3902888388',   ['39', '02', '8883', '88'] # Milano 6 digit
+      it_splits '39028883888',  ['39', '02', '8883', '888'] # Milano 7 digit
+      it_splits '390288838883', ['39', '02', '8883', '8883'] # Milano 8 digit
       it_splits '390141595661', ['39', '0141', '595', '661'] # Asti
       it_splits '3903123391',   ['39', '031', '23391']   # Como
       it_splits '390909709511', ['39', '090', '9709511'] # Barcellona
@@ -417,12 +460,16 @@ describe 'country descriptions' do
     end
     describe 'Luxembourg' do
       it_splits '352222809',       ['352', '22', '28', '09']
-      it_splits '35226222809',     ['352', '26', '22', '28', '09']
+      it_splits '35226222809',     ['352', '2622', '28', '09']
       it_splits '352621123456',    ['352', '621', '123', '456']
-      it_splits '3524123456',      ['352', '4', '12', '34', '56']
+      it_splits '3524123456',      ['352', '41', '23', '45', '6']
       it_splits '352602112345678', ['352', '6021', '12', '34', '56', '78']
       it_splits '352370431',       ['352', '37', '04', '31']
       it_splits '35227855',        ['352', '27', '85', '5']
+      it_splits '352445566',       ['352', '44', '55', '66']
+      it_splits '352545258',       ['352', '54', '52', '58']
+      it_splits '352818181',       ['352', '81', '81', '81']
+      it_splits '3523572141',      ['352', '35', '72', '14', '1']
     end
     describe 'Macedonia' do
       it_splits '38921234567', ['389', '2', '123', '4567'] # Skopje
@@ -430,6 +477,11 @@ describe 'country descriptions' do
       it_splits '38941234567', ['389', '4', '123', '4567'] # Western Macedonia
       it_splits '38951234567', ['389', '5', '123', '4567'] # Premium
       it_splits '38971234567', ['389', '7', '123', '4567'] # Mobile
+    end
+    describe 'Macao' do
+      it_splits '85328123456', ["853", "28", "12", "3456"] # Landline
+      it_splits '85381234567', ["853", "8", "123", "4567"] # Landline
+      it_splits '85361234567', ["853", "6", "123", "4567"] # Mobile
     end
     describe 'Malaysia' do
       it_splits '6082123456',   ['60', '82', '123456']   # Kuching
@@ -481,6 +533,7 @@ describe 'country descriptions' do
       it_splits '31612345678', ['31', '6', '12', '34', '56', '78'] # mobile
       it_splits '31201234567', ['31', '20', '123', '4567']
       it_splits '31222123456', ['31', '222', '123', '456']
+      it_splits '3197012345678', ['31', '970', '1234', '5678'] # machine-to-machine
     end
     describe 'Norway' do
       it_splits '4721234567', ['47',false,'21','23','45','67']
@@ -523,6 +576,8 @@ describe 'country descriptions' do
     describe 'Poland' do
       it_splits '48123456789', ['48', '12', '345', '67', '89'] # Landline
       it_splits '48501123456', ['48', '501', '123', '456']     # Mobile
+      it_splits '48571123456', ['48', '571', '123', '456']     # Mobile
+      it_splits '48451123456', ['48', '451', '123', '456']     # Mobile
       it_splits '48800123456', ['48', '800', '123', '456']     # Free
       it_splits '48801123456', ['48', '801', '123', '456']     # Shared cost
       it_splits '48701123456', ['48', '701', '123', '456']     # Premium
@@ -548,17 +603,23 @@ describe 'country descriptions' do
       it_splits '40791231234', ['40', '79', '123', '1234'] # mobile
       it_splits '40249123123', ['40', '249', '123', '123'] # Olt
     end
+
     describe 'Russia' do
       it_splits '78122345678',   ['7', '812', '234', '56', '78'] # Russia 3-digit
       it_splits '74012771077',   ['7', '4012', '77', '10', '77'] # Russia 4-digit
       it_splits '78402411212',   ['7', '84024', '1', '12', '12'] # Russia 5-digit
-      it_splits '79296119119',   ['7', '929', '611', '91', '19'] # Russia 3-digit, Megafon Mobile.
+      it_splits '79296119119',   ['7', '929', '611', '91', '19'] # Russia 3-digit, Megafon Mobile
+      it_splits '79691234567',   ['7', '969', '123', '45', '67'] # Russia 3-digit, Beeline
+      it_splits '79771234567',   ['7', '977', '123', '45', '67'] # Russia 3-digit
+      it_splits '79961234567',   ['7', '996', '123', '45', '67'] # Russia 3-digit
+      it_splits '79991234567',   ['7', '999', '123', '45', '67'] # Russia 3-digit
       it_splits '7840121212',    ['7', '840', '12', '1212']  # Abhasia
       it_splits '7799121212',    ['7', '799', '12', '1212']  # Kazachstan
-      it_splits '7995344121212', ['7','995344','12','1212']   # South Osetia
+      it_splits '7995344121212', ['7','995344','12','1212']  # South Osetia
       it_splits '7209175276',    ['7', '209', '17', '5276']  # Fantasy number
     end
-		describe 'Rwanda' do
+
+    describe 'Rwanda' do
       it_splits '250781234567', ['250', '78', '1234567'] # mobile
       it_splits '250721234567', ['250', '72', '1234567'] # mobile
       it_splits '250731234567', ['250', '73', '1234567'] # mobile
@@ -601,12 +662,15 @@ describe 'country descriptions' do
     end
 
     describe 'Singapore' do
-      it_splits '6561231234', ['65', false, '6123', '1234'] # Fixed line
+      it_splits '6561231234',   ['65', false, '6123', '1234'] # Fixed line
+      it_splits '658008521234', ['65', false, '800', '852', '1234'] # International Toll Free Service (ITFS) and Home Country Direct Service (HCDS) Numbers
     end
     describe 'Slovakia' do
       it_splits '421912123456', ['421', '912', '123456'] # Mobile
       it_splits '421212345678', ['421', '2', '12345678'] # Bratislava
+      it_splits '4212123',      ['421', '2', '123'] # Bratislava Short
       it_splits '421371234567', ['421', '37', '1234567'] # Nitra / Other
+      it_splits '42137123',     ['421', '37', '123'] # Nitra / Other Short
     end
 
     describe 'Slovenia' do
@@ -630,12 +694,18 @@ describe 'country descriptions' do
       it_splits '46812345678', ['46', '8', '123', '45', '678'] # Stockholm
       it_splits '46111234567', ['46', '11', '123', '45', '67']
       it_splits '46721234567', ['46', '72', '123', '45', '67'] # mobile
-      it_splits '46125123456', ['46', '125', '123', '456']
+      it_splits '46791234567', ['46', '79', '123', '45', '67'] # mobile
+      it_splits '46125123456', ['46', '125', '12', '34', '56']
       it_splits '46770820180', ['46', '77', '082', '01', '80']
+      it_splits '4641712345',  ['46', '417', '123', '45']
+      it_splits '46513123456', ['46', '513', '12', '34', '56']
     end
     describe 'Switzerland' do
       it_splits '41443643532', ['41', '44', '364', '35', '32'] # Zurich (usually)
       it_splits '41800334455', ['41', '800', '334', '455']     # Service number
+      it_splits '41900123456', ['41', '900', '123', '456']     # Business Number
+      it_splits '41901123456', ['41', '901', '123', '456']     # Business Number Entertainment
+      it_splits '41906123456', ['41', '906', '123', '456']     # Business Number Adult Entertainment
     end
     describe 'Tanzania' do
       it_splits '255221231234', ['255', '22', '123', '1234'] # Dar Es Salaam
@@ -713,15 +783,20 @@ describe 'country descriptions' do
     end
     describe 'Vietnam' do
       it_splits '8498123456', ['84', '98', '123456'] # Viettel Mobile
-      it_splits '8499612345', ['84', '996', '12345'] # GTel
+      it_splits '8499612345', ['84', '99', '612345'] # GTel
       it_splits '84412345678', ['84', '4', '1234', '5678'] # Hanoi
     end
     describe 'Zambia' do
-      it_splits '260955123456', ['260', '955', '123456'] # mobile
-      it_splits '260211123456', ['260', '211', '123456'] # fixed
+      it_splits '260211123456', ['260', '211', '123456']     # Fixed
+      it_splits '260955123456', ['260', '955', '123456']     # Mobile
+      it_splits '260967123456', ['260', '967', '123456']     # Mobile
+      it_splits '260978123456', ['260', '978', '123456']     # Mobile
+      it_splits '260800123456', ['260', '800', '123', '456'] # Toll free
     end
     describe 'New Zealand' do
       it_splits '6491234567', ['64', '9', '123', '4567']
+      it_splits '64800123123', ['64', '800', '123', '123']
+      it_splits '648001231234', ['64', '800', '123', '1234']
     end
     describe 'Bhutan (Kingdom of)' do
       it_splits '9759723642', %w(975 9 723 642)
@@ -736,7 +811,7 @@ describe 'country descriptions' do
       it_splits '25712345678', ['257', false, '1234', '5678']
     end
     describe 'Cameroon' do
-      it_splits '23727659381', ['237', false, '2765', '9381']
+      it_splits '237276593812', ['237', false, '276', '59', '38', '12']
     end
     describe 'Cape Verde' do
       it_splits '2385494177', ['238', false, '549', '4177']
@@ -768,7 +843,7 @@ describe 'country descriptions' do
       it_splits '6701742945', ['670', false, '174', '2945']
     end
     describe 'Democratic Republic of the Congo' do
-      it_splits '24311995381', %w(243 1 199 5381)
+      it_splits '243121995381', %w(243 12 199 5381)
     end
     describe 'Diego Garcia' do
       it_splits '2461234683', ['246', false, '123', '4683']
@@ -777,7 +852,30 @@ describe 'country descriptions' do
       it_splits '25349828978', ['253', false, '4982', '8978']
     end
     describe 'Ecuador' do
-      it_splits '593445876756', %w(593 44 587 6756)
+      it_splits '593220000000', %w(593 22 000 0000)
+      it_splits '59322000000', %w(593 2 200 0000)
+      it_splits '593230000000', %w(593 23 000 0000)
+      it_splits '59323000000', %w(593 2 300 0000)
+      it_splits '59324000000', %w(593 2 400 0000)
+      it_splits '59325000000', %w(593 2 500 0000)
+      it_splits '593260000000', %w(593 26 000 0000)
+      it_splits '59327000000', %w(593 2 700 0000)
+      it_splits '593270000000', %w(593 27 000 0000)
+      it_splits '59330000000', %w(593 3 000 0000)
+      it_splits '59340000000', %w(593 4 000 0000)
+      it_splits '593440000000', %w(593 44 000 0000)
+      it_splits '593450000000', %w(593 45 000 0000)
+      it_splits '59345000000', %w(593 4 500 0000)
+      it_splits '59346000000', %w(593 4 600 0000)
+      it_splits '593470000000', %w(593 47 000 0000)
+      it_splits '59352000000', %w(593 5 200 0000)
+      it_splits '59353000000', %w(593 5 300 0000)
+      it_splits '59362000000', %w(593 6 200 0000)
+      it_splits '59372000000', %w(593 7 200 0000)
+      it_splits '59373000000', %w(593 7 300 0000)
+      it_splits '59374000000', %w(593 7 400 0000)
+      it_splits '59376000000', %w(593 7 600 0000)
+      it_splits '593900000000', %w(593 9 0000 0000)
     end
     describe 'Eritrea' do
       it_splits '2916537192', %w(291 6 537 192)
@@ -822,7 +920,7 @@ describe 'country descriptions' do
       it_splits '224662123456', ['224', '662', '12', '34', '56']
     end
     describe 'Guinea-Bissau' do
-      it_splits '2453837652', ['245', false, '383', '7652']
+      it_splits '245443837652', ['245', false, '44', '383', '7652']
     end
     describe 'Guyana' do
       it_splits '5922631234', %w(592 263 1234)
@@ -917,7 +1015,7 @@ describe 'country descriptions' do
       it_splits '22212345678', ['222', false, '1234', '5678']
     end
     describe 'Mauritius' do
-      it_splits '2309518919', ['230', false, '951', '8919']
+      it_splits '23059518919', ['230', false, '5951', '8919']
     end
     describe 'Micronesia (Federated States of)' do
       it_splits '6911991754', ['691', false, '199', '1754']
@@ -1089,6 +1187,7 @@ describe 'country descriptions' do
       it_splits '38160123', %w(381 60 123)
       it_splits '381601234567890', %w(381 60 123 456 7890)
       it_splits '38170123456', %w(381 70 123 456)
+      it_splits '38163123456', %w(381 63 123 456)
     end
     describe 'Sierra Leone' do
       it_splits '23264629769', %w(232 64 629 769)
@@ -1097,13 +1196,23 @@ describe 'country descriptions' do
       it_splits '67754692', ['677', false, '54', '692']
       it_splits '6777546921', ['677', false, '7546', '921']
     end
-    describe 'Somali Democratic Republic' do
+    describe 'Somalia' do
       it_splits '252103412345', %w(252 1034 123 45)
       it_splits '2521313123', %w(252 1313 123)
       it_splits '2521601234', %w(252 160 12 34)
       it_splits '25250012345', %w(252 500 123 45)
-      it_splits '252671234567', %w(252 67 1234 567)
+      it_splits '252612345678', %w(252 61 234 5678) # Hormuud
+      it_splits '252622345678', %w(252 62 234 5678) # Somtel Mogadishu
+      it_splits '252634000613', %w(252 63 400 0613) # Telesom
+      it_splits '252642345678', %w(252 64 234 5678) # Hormuud
+      it_splits '252652345678', %w(252 65 234 5678) # Somtel
+      it_splits '252662345678', %w(252 66 234 5678) # Somtel Puntland
+      it_splits '252672345678', %w(252 67 234 5678) # Nationlink Mogadishu
+      it_splits '252682345678', %w(252 68 234 5678) # Nationlink Mogadishu
+      it_splits '252692345678', %w(252 69 234 5678) # Nationlink
+      it_splits '252902345678', %w(252 90 234 5678) # Golis
     end
+
     describe 'Suriname (Republic of)' do
       it_splits '597958434', ['597', false, '958', '434']
 
@@ -1121,16 +1230,21 @@ describe 'country descriptions' do
       it_splits '963912345678', %w(963 9 1234 5678)
     end
     describe 'Taiwan' do
-      it_splits '88618123456', %w(886 18 123 456)
-      it_splits '8866121234567', %w(886 612 123 4567)
       it_splits '886212345678', %w(886 2 1234 5678)
       it_splits '88631234567', %w(886 3 123 4567)
-      it_splits '88633123456', %w(886 33 123 456)
-      it_splits '88682712345', %w(886 827 123 45)
-      it_splits '8864121234', %w(886 412 1234)
-      it_splits '88690123456', %w(886 90 123 456)
-      it_splits '886901234567', %w(886 90 123 4567)
-      it_splits '88694991345', %w(886 94 991 345)
+      it_splits '88651234567', %w(886 5 123 4567)
+      it_splits '88661234567', %w(886 6 123 4567)
+      it_splits '88671234567', %w(886 7 123 4567)
+      it_splits '88633123456', %w(886 3 312 3456)
+      it_splits '88637123456', %w(886 37 12 3456)
+      it_splits '88682712345', %w(886 82 71 2345)
+      it_splits '88689712345', %w(886 89 71 2345)
+      it_splits '88682672345', %w(886 826 7 2345)
+      it_splits '88683672345', %w(886 836 7 2345)
+      it_splits '88641212345', %w(886 4 121 2345)
+      it_splits '886412123456', %w(886 4 1212 3456)
+      it_splits '886491234567', %w(886 49 123 4567)
+      it_splits '886901234567', %w(886 901 234 567)
     end
     describe 'Togolese Republic' do
       it_splits '22812345678', ['228', false, '1234', '5678']
@@ -1176,6 +1290,7 @@ describe 'country descriptions' do
       it_splits '380911234567', %w(380 91 123 45 67)
       it_splits '380921234567', %w(380 92 123 45 67)
       it_splits '380931234567', %w(380 93 123 45 67)
+      it_splits '380731234567', %w(380 73 123 45 67)
       it_splits '380941234567', %w(380 94 123 45 67)
       it_splits '380951234567', %w(380 95 123 45 67)
       it_splits '380961234567', %w(380 96 123 45 67)
@@ -1191,6 +1306,8 @@ describe 'country descriptions' do
       it_splits '971600641234', %w(971 600 641 234)
       it_splits '971500641234', %w(971 500 641 234)
       it_splits '971200641234', %w(971 200 641 234)
+      it_splits '971549999999', %w(971 54 999 9999)
+      it_splits '971589999999', %w(971 58 999 9999)
     end
     describe 'Uruguay (Eastern Republic of)' do
       it_splits '59880012345', %w(598 800 123 45)

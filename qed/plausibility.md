@@ -79,11 +79,16 @@ Some of the examples use `plausible? true: [some numbers]`.
     Phony.assert.plausible?('+43 1 000000')
     Phony.assert.plausible?('+43 1 0000000')
     Phony.assert.plausible?('+43 501 12345')
-    Phony.refute.plausible?('+43 501 1234') # too short
-    Phony.refute.plausible?('+43 501 123456') # too long
+    Phony.assert.plausible?('+43 800 123456')
+    Phony.assert.plausible?('+43 800 1234567')
+    Phony.assert.plausible?('+43 800 12345678')
     Phony.assert.plausible?('+43 800 123456789')
+    Phony.assert.plausible?('+43 800 1234567890')
     Phony.assert.plausible?('+43 512 1234567890')
+    Phony.assert.plausible?('+43 670 1234567890')
     Phony.assert.plausible?('+43 3115 3307') # See issue #246 on Github.
+    Phony.assert.plausible?('+43 678 1220084')
+    Phony.assert.plausible?('+43 720 116987')
 
 Mobile.
 
@@ -92,9 +97,10 @@ Mobile.
     Phony.assert.plausible?('+43 688 0000000')
     Phony.assert.plausible?('+43 699 00000000')
 
-663 mobile numbers have 6 digits.
+663 mobile numbers have 6..8 digits.
 
     Phony.assert.plausible?('+43 663 000000')
+    Phony.assert.plausible?('+43 663 12345678')
 
 Mobile numbers can have from 7 to 10 digits in the subscriber number.
 
@@ -219,8 +225,10 @@ http://www.khmerdigitalpost.com/mobile-operators-in-cambodia-by-2015/
     Phony.assert.plausible?("+855762345678")    # Mobitel (7 digit id)
     Phony.refute.plausible?("+85576234567")     # Mobitel (too short)
     Phony.assert.plausible?("+85517234567")     # Mobitel (6 digit id)
+    Phony.assert.plausible?("+85512999399")     # Mobitel (6 digit id)
     Phony.refute.plausible?("+855172345678")    # Mobitel (too long)
     Phony.assert.plausible?("+85592122417")     # Mobitel (6 digit extended range id)
+    Phony.assert.plausible?("+855121234567")    # Mobitel (7 digit extended range id)
 
     Phony.assert.plausible?("+855383001801")    # CooTel (7 digit id)
     Phony.refute.plausible?("+85538300180")     # CooTel (too short)
@@ -248,8 +256,8 @@ http://www.khmerdigitalpost.com/mobile-operators-in-cambodia-by-2015/
     Phony.refute.plausible?("+855188700545")    # Excell (too long)
     Phony.refute.plausible?("+85518970054")     # Seatel (too short)
 
-    Phony.assert.plausible?("+855399999898")    # EMAXX  (7 digit id)
-    Phony.refute.plausible?("+85539999989")     # EMAXX  (too short)
+    Phony.assert.plausible?("+855399999898")    # Kingtel  (7 digit id)
+    Phony.refute.plausible?("+85539999989")     # Kingtel  (too short)
 
     Phony.refute.plausible?("+85512023456")     # invalid numbering plan
     Phony.refute.plausible?("+85510123456")     # invalid numbering plan
@@ -321,7 +329,7 @@ http://www.khmerdigitalpost.com/mobile-operators-in-cambodia-by-2015/
 
 #### Cameroon
 
-    plausible? true: '+237 7372 8186'
+    plausible? true: '+237 737 28 18 65'
 
 #### Cape Verde
 
@@ -348,13 +356,17 @@ Landline.
     Phony.assert.plausible?('+385 21 695900')
     Phony.assert.plausible?('+385 1 4566 666')
 
-    Phony.refute.plausible?('+385 21 12345') # Too short
-    Phony.refute.plausible?('+385 21 1234567') # Too long
+    Phony.refute.plausible?('+385 21 123 45') # Too short
+    Phony.assert.plausible?('+385 21 123 456')
+    Phony.assert.plausible?('+385 21 123 4567')
+    Phony.refute.plausible?('+385 21 123 45678') # Too long
 
 Mobile.
 
-    Phony.assert.plausible?('+385 91 896 7509')
-    Phony.refute.plausible?('+385 91 123456') # Too short
+    Phony.refute.plausible?('+385 91 123 45') # Too short
+    Phony.assert.plausible?('+385 91 123 456')
+    Phony.assert.plausible?('+385 91 123 4567')
+    Phony.assert.plausible?('+385 91 896 7509') # Too long
 
 #### Colombia
 
@@ -482,6 +494,25 @@ Mobile.
       '+30 909 123 4565'
     ]
 
+#### Hungary
+
+    plausible? true: [
+        '+36 1 234 5678',     # Budapest
+        '+36 20 1234 567',    # Telenor
+        '+36 30 1234 567',    # T-Mobile
+        '+36 70 1234 567',    # Vodafone
+        '+36 31 1234 567',    # UPC, Tesco Mobile
+        '+36 21 1234 567',    # Voip
+        '+36 40 123 456',     # Business rate numbers
+        '+36 80 123 456',     # Freephone service
+        '+36 90 123 456',     # Premium-rate number
+        '+36 91 123 456',     # Premium-rate number
+        '+36 38 123 4567',    # Corporate network numbers
+        '+36 51 123 456',     # SHS
+        '+36 71 12345 67890', # M2M (2+10)
+        '+36 22 123 567'      # Geographic number
+    ]
+
 #### Indonesia
 
     plausible? true: [
@@ -509,7 +540,7 @@ Mobile.
       '+62 870 123 45',
       ['+62 877 123 456', '+62 877 123 4567', '+62 877 1234 5678'],
       ['+62 878 123 456', '+62 878 123 4567', '+62 878 1234 5678'],
-      ['+62 881 123 456', '+62 881 123 4567', '+62 881 1234 5678'],
+      ['+62 881 123 456', '+62 881 123 4567', '+62 881 1234 5678', '+62 881 1234 56789'],
       '+62 9 1234 567',
       '+62 9 123 456 789'
     ]
@@ -521,6 +552,8 @@ Mobile.
 
 #### Italy
 
+    Phony.assert.plausible?('+39 06 1234 45')
+    Phony.assert.plausible?('+39 06 1234 456')
     Phony.assert.plausible?('+39 06 1234 4567')
 
     Phony.refute.plausible?('+39 035 00000')
@@ -659,6 +692,9 @@ With regexp constraints.
     Phony.assert.plausible?('+31 900 123 4567')
     Phony.refute.plausible?('+31 900 001 00')
     Phony.assert.plausible?('+31 800 6080')
+    Phony.assert.plausible?('+31 970 1234 5678')
+    Phony.refute.plausible?('+31 971 2345 6789')
+    Phony.assert.plausible?('+31 979 0000 0000')
 
 #### New Zealand
 
@@ -813,6 +849,10 @@ With regexp constraints.
     Phony.assert.plausible?('+46 8 506 106 00')
     Phony.assert.plausible?('+46 19 764 22 00')
     Phony.assert.plausible?('+46 19 20 88 50')
+    Phony.assert.plausible?('+46 42 123 45')
+    Phony.assert.plausible?('+46 79 123 45 67')
+    Phony.assert.plausible?('+46 513 12 34 56')
+    Phony.refute.plausible?('+46 513 12 34 567') # too long
     Phony.refute.plausible?('+46 19 20 88') # too short
 
 #### Vietnam
