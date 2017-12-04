@@ -7,6 +7,7 @@ group :test do
   gem 'qed'
   gem 'ae'
   gem 'rspec', '~> 2.0'
+  gem 'rspec_junit_formatter'
   gem 'pippi', platforms: [:mri_20, :mri_21]
 end
 
